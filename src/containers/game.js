@@ -7,7 +7,6 @@ import ColorBox from '../components/color_box'
 const ColorName = styled.div`
   text-align: center;
   font-size: 3rem;
-  color: ${props => props.color}
 `
 
 class Game extends Component {
@@ -23,7 +22,7 @@ class Game extends Component {
     const { currentColor, answers } = this.props.gameInfo
     return (
       <div>
-        <ColorName color={currentColor.getCSSHex()}>{currentColor.getCSSHex()}</ColorName>
+        <ColorName>{currentColor.getCSSHex()}</ColorName>
         {answers.map((color, index) => 
           <ColorBox 
             key={index} 
