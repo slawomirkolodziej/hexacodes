@@ -59,7 +59,7 @@ export default class Color {
     }
     return new Color([
       this.getRandomNumber(0 ,360, true, ...generateRange(h, 360, offset)), 
-      h, 
+      s, 
       l
     ])
   }
