@@ -15,9 +15,8 @@ export const startGame = (mode, level) => {
       level,
       currentColor,
       answers: shuffle([
-        currentColor.getSimilarColor(level),
-        currentColor.getSimilarColor(level),
-        currentColor
+        currentColor,
+        ...currentColor.getSimilarColors(level)
       ])
     }
   }
@@ -42,9 +41,8 @@ export const generateNewColors = (currentColor, level) => {
     payload: {
       newCurrentColor,
       answers: shuffle([
-        newCurrentColor.getSimilarColor(level),
-        newCurrentColor.getSimilarColor(level),
-        newCurrentColor
+        newCurrentColor,
+        ...newCurrentColor.getSimilarColors(level)
       ])
     } 
   }

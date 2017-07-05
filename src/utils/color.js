@@ -1,14 +1,19 @@
-import { shuffle } from 'lodash'
-
 export default class Color {
 
   constructor(color, prevColor) {
-    if(!color) {
-      do {
+    this.hueValueRange = [0, 360]
+    this.saturationValueRange = [25, 100]
+    this.lightnessValueRange = [25, 75]
+
+    if(prevColor) {
+       do {
         this.color = this.getRandomColor()
-      } while (this.color === prevColor)
+      } while (this.getCSSHsl() === prevColor.getCSSHsl())
+    } else if (!color) {
+      this.color = this.getRandomColor()
+    } else {
+      this.color = color
     }
-    else this.color = color
   }
 
   getCSSHex() {
@@ -25,55 +30,90 @@ export default class Color {
   }
 
   getRandomColor() {
-    return [this.getRandomNumber(0, 360), this.getRandomNumber(0, 100), this.getRandomNumber(0, 100)]
+    return [
+      this.getRandomNumber(...this.hueValueRange),
+      this.getRandomNumber(...this.saturationValueRange),
+      this.getRandomNumber(...this.lightnessValueRange)
+    ]
   }
 
-  getSimilarColor(difficulty, exclude = []) {
+  getSimilarColors(difficulty) {
     const [h, s, l] = this.color
-    let offset
+    let difference
 
     switch(difficulty) {
       case 'easy':
-        offset = 30
+        difference = 0.25
         break
       case 'medium':
-        offset = 20
+        difference = 0.15
         break
       case 'hard':
-        offset = 10
+        difference = 0.1
         break
       default:
-        offset = 30
+        difference = 0.25
     }
-
-    console.log(offset)
     
-    const generateRange = (center, max, offset) => {
-      let from = center - (offset * max / 100)
-      let to = center + (offset * max / 100)
+    const shiftNumberWithinRange = (number, offset, min, max) => {
+      let shiftedNumber = number + offset
 
-      if(from < 0) from += max
-      if(to > max) to -= max
+      if (shiftedNumber > max) return shiftedNumber - max + min
+      else if (shiftedNumber < min) return max - (min - shiftedNumber)
 
-      return [from, to]
+      return shiftedNumber
     }
-    return new Color([
-      this.getRandomNumber(0 ,360, true, ...generateRange(h, 360, offset)), 
-      s, 
-      l
-    ])
+
+    const getRandomNumberWithinRange = (min, max, range) => {
+      console.log(min, max, range)
+      const {from, to} = range
+
+      if(from > to) {
+        const randomRangeIndicator = this.getRandomNumber(0, 1)
+        if(randomRangeIndicator) return this.getRandomNumber(from, max)
+        else return this.getRandomNumber(min, to)
+      }
+
+      return this.getRandomNumber(from, to)
+    }
+
+    const calculateRanges = (center, min, max, difference) => {
+      const offset = (difference + (max - min))
+      const firstRangeStart = shiftNumberWithinRange(center, offset, min, max)
+      const secondRangeStart = shiftNumberWithinRange(center, -offset, min, max)
+      const ranges = [
+        {
+          from: firstRangeStart,
+          to: shiftNumberWithinRange(firstRangeStart, offset * 2, min, max)
+        },
+        {
+          from: secondRangeStart,
+          to: shiftNumberWithinRange(secondRangeStart, -offset * 2, min, max)
+        }
+      ]
+      
+      return ranges
+    }
+
+    const hueRanges = calculateRanges(h, ...this.hueValueRange, difference)
+    const saturationRanges = calculateRanges(s, ...this.saturationValueRange, difference)
+    const lightnessRanges = calculateRanges(l, ...this.lightnessValueRange, difference)
+
+    return [
+      new Color([
+        getRandomNumberWithinRange(...this.hueValueRange, hueRanges[0]),
+        getRandomNumberWithinRange( ...this.saturationValueRange, saturationRanges[0]),
+        getRandomNumberWithinRange(...this.lightnessValueRange, lightnessRanges[0])
+      ]),
+      new Color([
+        getRandomNumberWithinRange(...this.hueValueRange, hueRanges[1]),
+        getRandomNumberWithinRange( ...this.saturationValueRange, saturationRanges[1]),
+        getRandomNumberWithinRange(...this.lightnessValueRange, lightnessRanges[1])
+      ])
+    ]
   }
 
-  getRandomNumber(min, max, outside = false, from, to) {
-    if(outside) {
-      if(from > to) [from, to] = [to, from]
-      
-      return shuffle([
-        Math.floor(Math.random() * (from - min + 1)) + min,
-        Math.floor(Math.random() * (max - to + 1)) + to
-      ])[0]
-    }
-
+  getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
