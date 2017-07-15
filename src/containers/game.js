@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { startGame, checkAnswer } from '../actions'
-import ColorBox from '../components/color_box'
+import ColorBox from '../components/ColorBox'
 
 const ColorName = styled.div`
   text-align: center;
@@ -17,9 +17,12 @@ class Game extends Component {
   }
 
   render() {
-    if(!this.props.gameInfo.currentColor) return <div></div>
+    const { currentColor, answers, gameOver } = this.props.gameInfo
 
-    const { currentColor, answers } = this.props.gameInfo
+    if(gameOver) return <div>GAME OVER! SCORE: {this.props.gameInfo.score}</div>
+
+    if(!currentColor) return <div></div>
+    
     return (
       <div>
         <ColorName>{currentColor.getCSSHex()}</ColorName>

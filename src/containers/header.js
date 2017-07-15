@@ -1,25 +1,24 @@
 import React from 'react'
-import { connect } from 'react-redux' 
-import styled from 'styled-components'
-
-const Navigation = styled.div`
-  padding: 0 15px;
-  background: silver;
-`
+import { connect } from 'react-redux'
+import GameStatus from '../components/GameStatus'
+import Timer from '../components/Timer'
+import Lives from '../components/Lives'
 
 const Header = (props) => {
   return (
     <div>
-      <Navigation>
-        score: {props.gameInfo.score}
-      </Navigation>
+        <GameStatus alertColor={props.gameInfo.statusColor} score={props.gameInfo.score} />
+        {/* force timer to rerender when score changes */}
+        <Timer isRunning={props.timer.isRunning} key={props.gameInfo.score} />
+        <Lives lives={props.gameInfo.lives} />
     </div>
   )
 }
 
 const mapStateToProps = state => {
   return {
-    gameInfo: state.gameInfo
+    gameInfo: state.gameInfo,
+    timer: state.timer
   }
 }
 

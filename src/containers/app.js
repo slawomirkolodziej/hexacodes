@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Header from './header'
-import MainMenu from '../containers/main_menu'
-import Game from '../containers/game'
+import Header from './Header'
+import MainMenu from '../containers/MainMenu'
+import Game from '../containers/Game'
 import { Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
 

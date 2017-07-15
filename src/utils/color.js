@@ -65,7 +65,6 @@ export default class Color {
     }
 
     const getRandomNumberWithinRange = (min, max, range) => {
-      console.log(min, max, range)
       const {from, to} = range
 
       if(from > to) {

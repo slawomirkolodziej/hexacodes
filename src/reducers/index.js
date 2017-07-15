@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import gameInfo from './reducer_game_info'
+import gameInfo from './reducerGameInfo'
+import timer from './reducerTimer'
 
 export default combineReducers({
-  gameInfo
+  gameInfo,
+  timer
 })

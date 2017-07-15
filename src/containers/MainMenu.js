@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import MenuItem from '../components/menu_item'
+import MenuItem from '../components/MenuItem'
 import { map } from 'lodash'
 import { Switch, Route } from 'react-router-dom'
 

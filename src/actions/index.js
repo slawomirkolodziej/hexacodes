@@ -1,15 +1,20 @@
 import Color from '../utils/color'
 import { shuffle } from 'lodash'
 
-export const START_GAME = 'start_game'
+export const RESET_GAME_INFO = 'reset_game_info'
 export const ADD_POINT = 'add_point'
 export const SUBSTRACT_POINT = 'substract_point'
 export const GENERATE_NEW_COLORS = 'generate_new_colors'
+export const START_TIMER = 'start_timer'
+export const STOP_TIMER = 'stop_timer'
+export const END_GAME = 'end_game'
+export const UPDATE_END_GAME_TIMEOUT = 'update_end_game_timeout'
 
-export const startGame = (mode, level) => {
+export const resetGameInfo = (mode, level) => {
   const currentColor = new Color()
+   
   return {
-    type: START_GAME,
+    type: RESET_GAME_INFO,
     payload: {
       mode,
       level,
@@ -22,15 +27,49 @@ export const startGame = (mode, level) => {
   }
 }
 
-export const addPoint = () => {
-  return {
-    type: ADD_POINT
+const endGame = () => {
+  return dispatch => {
+    dispatch({ type: END_GAME })
+    dispatch({ type: STOP_TIMER })
   }
 }
 
+export const addPoint = () => {
+  return { type: ADD_POINT }
+}
+
 export const substractPoint = () => {
-  return {
-    type: SUBSTRACT_POINT
+  return { type: SUBSTRACT_POINT }
+}
+
+const resetTimer = () => {
+  return (dispatch, getState) => { 
+    const prevTimeout = getState().timer.endGameTimeout
+    if(prevTimeout) clearTimeout(prevTimeout)
+
+    if(getState().gameInfo.lives === 0 ) {
+      dispatch(endGame())
+    } else {
+      const timeout = setTimeout(() => {
+        dispatch(substractPoint())
+        dispatch(resetTimer())
+      }, 10 * 1000)
+
+      dispatch({ type: START_TIMER })
+      dispatch({ 
+        type: UPDATE_END_GAME_TIMEOUT,
+        payload: {
+          endGameTimeout: timeout
+        }
+      })
+    }
+   } 
+}
+
+export const startGame = (mode, level) => {
+  return dispatch => {
+    dispatch(resetTimer())
+    dispatch(resetGameInfo(mode, level))
   }
 }
 
@@ -49,14 +88,19 @@ export const generateNewColors = (currentColor, level) => {
 }
 
 export const checkAnswer = (currentColor, answer, level) => {
-  return dispatch => {
+  return (dispatch, getState) => {
     if(currentColor.getCSSHex() === answer.getCSSHex()) {
       dispatch(addPoint())
     } else {
       dispatch(substractPoint())
     }
 
-    dispatch(generateNewColors(currentColor, level))
+    if(getState().gameInfo.lives === 0) {
+      dispatch(endGame())
+    } else {
+      dispatch(resetTimer())
+      dispatch(generateNewColors(currentColor, level))
+    } 
   }
 }
 
