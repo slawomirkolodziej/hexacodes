@@ -7,9 +7,8 @@ import Lives from '../components/Lives'
 const Header = (props) => {
   return (
     <div>
-        <GameStatus alertColor={props.gameInfo.statusColor} score={props.gameInfo.score} />
-        {/* force timer to rerender when score changes */}
         <Timer isRunning={props.timer.isRunning} key={props.gameInfo.score} />
+        <GameStatus score={props.gameInfo.score} />
         <Lives lives={props.gameInfo.lives} />
     </div>
   )

@@ -5,8 +5,8 @@ const ColorBox = styled.div`
   display: inline-block;
   height: 100px;
   width: 100px;
-  border: 1px solid black;
-  background-color: ${props => props.color}
+  background-color: ${props => props.color};
+  border-radius: 3px
 `
 
 export default props => {

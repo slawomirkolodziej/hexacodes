@@ -46,10 +46,10 @@ export default class Color {
         difference = 0.25
         break
       case 'medium':
-        difference = 0.15
+        difference = 0.1
         break
       case 'hard':
-        difference = 0.1
+        difference = 0.05
         break
       default:
         difference = 0.25
@@ -77,17 +77,18 @@ export default class Color {
     }
 
     const calculateRanges = (center, min, max, difference) => {
-      const offset = (difference + (max - min))
+      const offset = (difference * (max - min))
       const firstRangeStart = shiftNumberWithinRange(center, offset, min, max)
       const secondRangeStart = shiftNumberWithinRange(center, -offset, min, max)
+
       const ranges = [
         {
           from: firstRangeStart,
           to: shiftNumberWithinRange(firstRangeStart, offset * 2, min, max)
         },
         {
-          from: secondRangeStart,
-          to: shiftNumberWithinRange(secondRangeStart, -offset * 2, min, max)
+          from: shiftNumberWithinRange(secondRangeStart, -offset * 2, min, max),
+          to: secondRangeStart
         }
       ]
       

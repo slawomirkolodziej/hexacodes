@@ -1,48 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import MenuItem from '../components/MenuItem'
-import { map } from 'lodash'
 import { Switch, Route } from 'react-router-dom'
 
 const GameTitle = styled.h1`
   text-align: center;
 `
 
-const menuElements = {
-  1: {
-    title: 'Classic Mode',
-    link: '/classic-mode/choose-level'
-  },
-  2: {
-    title: 'Reverse Mode',
-    link: '/reverse-mode/choose-level'
-  }
-}
-
-const levels = {
-  easy: {
-    title: 'Easy'
-  },
-  medium: {
-    title: 'Medium'
-  },
-  hard: {
-    title: 'Hard'
-  }
-}
-
 const renderMenuElements = () => {
   return (
     <div>
-      {map(menuElements, (element, id) => {
-        return (
-          <MenuItem 
-            key={id} 
-            title={element.title} 
-            link={element.link} 
-          />
-        )
-      })}
+      <MenuItem
+        title="Play" 
+        link="/choose-level"
+      />
     </div>
   )
 }
@@ -50,27 +21,34 @@ const renderMenuElements = () => {
 const renderLevel = (props) => {
   return (
     <div>
-      {map(levels, (level, id) => {
-        return (
-          <MenuItem
-            key={id}
-            title={level.title}
-            link={`/game/${props.match.params.mode}/${id}`}
-          />
-        )
-      })}
+      <MenuItem
+        key="easy"
+        title="Easy"
+        link="/game/easy"
+      />
+      <MenuItem
+        key="medium"
+        title="Medium"
+        link="/game/medium"
+      />
+      <MenuItem
+        key="hard"
+        title="Hard"
+        link="/game/hard"
+      />
     </div>
   )
 }
 
-export default () => {
-    return (
-      <div>
-        <GameTitle>Hexacodes</GameTitle>
-        <Switch>
-          <Route path="/:mode/choose-level" component={renderLevel} />
-          <Route path="/" component={renderMenuElements} />
-        </Switch>
-      </div>
-    )
+export default (props) => {
+
+  return (
+    <div>
+      <GameTitle>Hexacodes</GameTitle>
+      <Switch>
+        <Route path="/choose-level" component={renderLevel} />
+        <Route path="/" component={renderMenuElements} />
+      </Switch>
+    </div>
+  )
 }

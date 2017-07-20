@@ -10,13 +10,12 @@ export const STOP_TIMER = 'stop_timer'
 export const END_GAME = 'end_game'
 export const UPDATE_END_GAME_TIMEOUT = 'update_end_game_timeout'
 
-export const resetGameInfo = (mode, level) => {
+export const resetGameInfo = (level) => {
   const currentColor = new Color()
    
   return {
     type: RESET_GAME_INFO,
     payload: {
-      mode,
       level,
       currentColor,
       answers: shuffle([
@@ -66,10 +65,10 @@ const resetTimer = () => {
    } 
 }
 
-export const startGame = (mode, level) => {
+export const startGame = (level) => {
   return dispatch => {
-    dispatch(resetTimer())
-    dispatch(resetGameInfo(mode, level))
+    //dispatch(resetTimer())
+    dispatch(resetGameInfo(level))
   }
 }
 
@@ -94,13 +93,9 @@ export const checkAnswer = (currentColor, answer, level) => {
     } else {
       dispatch(substractPoint())
     }
-
-    if(getState().gameInfo.lives === 0) {
-      dispatch(endGame())
-    } else {
-      dispatch(resetTimer())
-      dispatch(generateNewColors(currentColor, level))
-    } 
+    
+    dispatch(resetTimer())
+    dispatch(generateNewColors(currentColor, level))
   }
 }
 

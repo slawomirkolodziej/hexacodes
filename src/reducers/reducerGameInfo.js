@@ -10,7 +10,6 @@ export default (state = {}, {type, payload}) => {
   switch(type) {
     case RESET_GAME_INFO:
       return {
-        mode: payload.mode,
         level: payload.level,
         currentColor: payload.currentColor,
         answers: payload.answers,
@@ -26,7 +25,7 @@ export default (state = {}, {type, payload}) => {
         answers: payload.answers
       }
     case ADD_POINT:
-      return { ...state, score: state.score + 1,  statusColor: '#27ae60' }
+      return { ...state, score: state.score + 1, statusColor: '#1abc9c' }
     case SUBSTRACT_POINT:
       return { ...state, score: state.score - 1, lives: state.lives - 1, statusColor: '#c0392b' }
     default:

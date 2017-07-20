@@ -8,7 +8,7 @@ const decreaseWidth = keyframes`
 `
 
 export default styled.div`
-  background: #27ae60;
+  background: #16a085;
   height: 24px;
   animation: ${props => props.isRunning ? `${decreaseWidth} 10s linear` : 'none'};
 `

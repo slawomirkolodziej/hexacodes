@@ -7,13 +7,21 @@ import ColorBox from '../components/ColorBox'
 const ColorName = styled.div`
   text-align: center;
   font-size: 3rem;
+  color: rgba(0, 0, 0, 0.85);
+  text-transform: uppercase;
+  font-weight: 600;
+`
+
+const Answers = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
 `
 
 class Game extends Component {
 
   componentDidMount() {
-    const { mode, level } = this.props.match.params
-    this.props.startGame(mode, level)
+    this.props.startGame(this.props.match.params.level)
   }
 
   render() {
@@ -26,14 +34,16 @@ class Game extends Component {
     return (
       <div>
         <ColorName>{currentColor.getCSSHex()}</ColorName>
-        {answers.map((color, index) => 
-          <ColorBox 
-            key={index} 
-            color={color}
-            currentColor={currentColor}
-            onClick={this.props.checkAnswer}
-          />
-        )}
+        <Answers>
+          {answers.map((color, index) => 
+            <ColorBox 
+              key={index} 
+              color={color}
+              currentColor={currentColor}
+              onClick={this.props.checkAnswer}
+            />
+          )}
+        </Answers>
       </div>
     )
   }
@@ -47,8 +57,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    startGame: (mode, level) => {
-      dispatch(startGame(mode, level))
+    startGame: (level) => {
+      dispatch(startGame(level))
     },
     checkAnswer: (currentColor, answer, level) => {
       dispatch(checkAnswer(currentColor, answer, level))
