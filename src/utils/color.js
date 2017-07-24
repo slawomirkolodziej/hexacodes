@@ -1,10 +1,8 @@
+import { hslRanges, levelMultiplier } from '../constants/settings'
+
 export default class Color {
 
   constructor(color, prevColor) {
-    this.hueValueRange = [0, 360]
-    this.saturationValueRange = [25, 100]
-    this.lightnessValueRange = [25, 75]
-
     if(prevColor) {
        do {
         this.color = this.getRandomColor()
@@ -36,26 +34,15 @@ export default class Color {
 
   getRandomColor() {
     return [
-      this.getRandomNumber(...this.hueValueRange),
-      this.getRandomNumber(...this.saturationValueRange),
-      this.getRandomNumber(...this.lightnessValueRange)
+      this.getRandomNumber(...hslRanges.h),
+      this.getRandomNumber(...hslRanges.s),
+      this.getRandomNumber(...hslRanges.l)
     ]
   }
 
   getSimilarColors(difficulty) {
     const [h, s, l] = this.color
-    let difference
-
-    switch(difficulty) {
-      case 'easy':
-        difference = 0.25
-        break
-      case 'hard':
-        difference = 0.07
-        break
-      default:
-        difference = 0.25
-    }
+    const multiplier = difficulty === 'hard' ? levelMultiplier.hard : levelMultiplier.easy 
     
     const shiftNumberWithinRange = (number, offset, min, max) => {
       let shiftedNumber = number + offset
@@ -67,19 +54,19 @@ export default class Color {
     }
 
     const getRandomNumberWithinRange = (min, max, range) => {
-      const {from, to} = range
+      const { from, to } = range
 
       if(from > to) {
         const randomRangeIndicator = this.getRandomNumber(0, 1)
-        if(randomRangeIndicator) return this.getRandomNumber(from, max)
+        if(randomRangeIndicator === 0) return this.getRandomNumber(from, max)
         else return this.getRandomNumber(min, to)
       }
 
       return this.getRandomNumber(from, to)
     }
 
-    const calculateRanges = (center, min, max, difference) => {
-      const offset = (difference * (max - min))
+    const calculateRanges = (center, min, max, multiplier) => {
+      const offset = (multiplier * (max - min))
       const firstRangeStart = shiftNumberWithinRange(center, offset, min, max)
       const secondRangeStart = shiftNumberWithinRange(center, -offset, min, max)
 
@@ -97,20 +84,20 @@ export default class Color {
       return ranges
     }
 
-    const hueRanges = calculateRanges(h, ...this.hueValueRange, difference)
-    const saturationRanges = calculateRanges(s, ...this.saturationValueRange, difference)
-    const lightnessRanges = calculateRanges(l, ...this.lightnessValueRange, difference)
+    const hueRanges = calculateRanges(h, ...hslRanges.h, multiplier)
+    const saturationRanges = calculateRanges(s, ...hslRanges.s, multiplier)
+    const lightnessRanges = calculateRanges(l, ...hslRanges.l, multiplier)
 
     return [
       new Color([
-        getRandomNumberWithinRange(...this.hueValueRange, hueRanges[0]),
-        getRandomNumberWithinRange( ...this.saturationValueRange, saturationRanges[0]),
-        getRandomNumberWithinRange(...this.lightnessValueRange, lightnessRanges[0])
+        getRandomNumberWithinRange(...hslRanges.h, hueRanges[0]),
+        getRandomNumberWithinRange( ...hslRanges.s, saturationRanges[0]),
+        getRandomNumberWithinRange(...hslRanges.l, lightnessRanges[0])
       ]),
       new Color([
-        getRandomNumberWithinRange(...this.hueValueRange, hueRanges[1]),
-        getRandomNumberWithinRange( ...this.saturationValueRange, saturationRanges[1]),
-        getRandomNumberWithinRange(...this.lightnessValueRange, lightnessRanges[1])
+        getRandomNumberWithinRange(...hslRanges.h, hueRanges[1]),
+        getRandomNumberWithinRange( ...hslRanges.s, saturationRanges[1]),
+        getRandomNumberWithinRange(...hslRanges.l, lightnessRanges[1])
       ])
     ]
   }
@@ -144,8 +131,7 @@ export default class Color {
     const toHex = x => {
       const hex = Math.round(x * 255).toString(16)
       return hex.length === 1 ? '0' + hex : hex
-    };
-    //return `#${toHex(r)}${toHex(g)}${toHex(b)}`
+    }
     return [toHex(r), toHex(g), toHex(b)]
   }
 }

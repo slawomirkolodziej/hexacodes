@@ -18,7 +18,7 @@ const StyledApp = styled.div`
 const GameWrapper = styled.div`
   margin: 0 auto;
   max-width: 600px;
-  height: 500px;
+  height: 395px;
   background: #ecf0f1;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `

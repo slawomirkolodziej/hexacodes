@@ -11,6 +11,7 @@ const ColorName = styled.div`
   color: rgba(0, 0, 0, 0.85);
   text-transform: uppercase;
   font-weight: 600;
+  margin-top: 20px;
 
   & span {
     font-size: 2rem;

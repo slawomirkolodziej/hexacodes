@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+import { injectGlobal } from 'styled-components'
 import thunk from 'redux-thunk'
 import reducers from './reducers'
 import App from './containers/App'
-import { injectGlobal } from 'styled-components'
 
 // eslint-disable-next-line
 injectGlobal`
@@ -20,11 +20,7 @@ injectGlobal`
   }
 `
 
-//const store = createStore(reducers, applyMiddleware(thunk))
-
-/* REDUX DEVTOOLS */
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
+const store = createStore(reducers, applyMiddleware(thunk))
 
 
 ReactDOM.render(
