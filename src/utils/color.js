@@ -17,7 +17,12 @@ export default class Color {
   }
 
   getCSSHex() {
-    return(this.hslToHex(...this.color)) 
+    const [r, g, b] = this.hslToHex(...this.color)
+    return `#${r}${g}${b}`
+  }
+
+  getHex() {
+    return this.hslToHex(...this.color)
   }
 
   getCSSHsl() {
@@ -45,11 +50,8 @@ export default class Color {
       case 'easy':
         difference = 0.25
         break
-      case 'medium':
-        difference = 0.1
-        break
       case 'hard':
-        difference = 0.05
+        difference = 0.07
         break
       default:
         difference = 0.25
@@ -143,6 +145,7 @@ export default class Color {
       const hex = Math.round(x * 255).toString(16)
       return hex.length === 1 ? '0' + hex : hex
     };
-    return `#${toHex(r)}${toHex(g)}${toHex(b)}`
+    //return `#${toHex(r)}${toHex(g)}${toHex(b)}`
+    return [toHex(r), toHex(g), toHex(b)]
   }
 }

@@ -1,16 +1,13 @@
 import React from 'react'
-import styled from 'styled-components'
-import MenuItem from '../components/MenuItem'
 import { Switch, Route } from 'react-router-dom'
+import Button from '../components/Button'
+import Title from '../components/Title'
 
-const GameTitle = styled.h1`
-  text-align: center;
-`
 
 const renderMenuElements = () => {
   return (
     <div>
-      <MenuItem
+      <Button
         title="Play" 
         link="/choose-level"
       />
@@ -21,18 +18,11 @@ const renderMenuElements = () => {
 const renderLevel = (props) => {
   return (
     <div>
-      <MenuItem
-        key="easy"
+      <Button
         title="Easy"
         link="/game/easy"
       />
-      <MenuItem
-        key="medium"
-        title="Medium"
-        link="/game/medium"
-      />
-      <MenuItem
-        key="hard"
+      <Button
         title="Hard"
         link="/game/hard"
       />
@@ -44,7 +34,7 @@ export default (props) => {
 
   return (
     <div>
-      <GameTitle>Hexacodes</GameTitle>
+      <Title>Hexacodes</Title>
       <Switch>
         <Route path="/choose-level" component={renderLevel} />
         <Route path="/" component={renderMenuElements} />

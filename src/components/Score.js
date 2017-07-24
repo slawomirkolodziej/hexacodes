@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const GameStatus = styled.div`
+const StyledScore = styled.div`
   height: 100%;
-  width: 100%;
+  width: 50%;
   padding: 10px;
   color: rgba(0, 0, 0, .85);
   text-transform: uppercase;
@@ -15,8 +15,8 @@ const GameStatus = styled.div`
 export default (props) => {
 
   return (
-    <GameStatus>
+    <StyledScore>
       Score: {props.score}
-    </GameStatus>
+    </StyledScore>
   )
 }

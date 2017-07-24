@@ -8,11 +8,11 @@ import styled from 'styled-components'
 
 
 const StyledApp = styled.div`
-  background: #1abc9c;
   width: 100%;
   min-height: 100vh;
   padding-top: 50px;
   background: ${props => props.statusColor ? props.statusColor : '#1abc9c'};
+  transition: 0.1s ease-in-out;
 `
 
 const GameWrapper = styled.div`

@@ -1,15 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import GameStatus from '../components/GameStatus'
+import styled from 'styled-components'
+import Score from '../components/Score'
 import Timer from '../components/Timer'
 import Lives from '../components/Lives'
 
+const GameInfo = styled.div`
+  display: flex;
+`
+
+
 const Header = (props) => {
+  if(props.gameInfo.gameOver) return <div></div>
+
   return (
     <div>
         <Timer isRunning={props.timer.isRunning} key={props.gameInfo.score} />
-        <GameStatus score={props.gameInfo.score} />
-        <Lives lives={props.gameInfo.lives} />
+        <GameInfo>
+          <Score score={props.gameInfo.score} />
+          <Lives lives={props.gameInfo.lives} />
+        </GameInfo>
     </div>
   )
 }
