@@ -13,6 +13,10 @@ const StyledApp = styled.div`
   padding-top: 50px;
   background: ${props => props.statusColor ? props.statusColor : '#1abc9c'};
   transition: 0.1s ease-in-out;
+
+  @media (max-width: 600px) {
+    padding: 30px 15px;
+  }
 `
 
 const GameWrapper = styled.div`
@@ -21,6 +25,10 @@ const GameWrapper = styled.div`
   height: 395px;
   background: #ecf0f1;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+  @media (max-width: 600px) {
+    height: auto;
+  }
 `
 
 const App = (props) => {

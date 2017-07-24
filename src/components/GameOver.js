@@ -9,12 +9,18 @@ const StyledScore = styled.div`
   margin-bottom: 30px;
 `
 
+const StyledGameOver = styled.div`
+  @media (max-width: 600px) {
+    padding-bottom: 30px;
+  }
+`
+
 export default ({ score }) => {
   return (
-    <div>
+    <StyledGameOver>
       <Title>GAME OVER!</Title>
       <StyledScore>Score: {score}</StyledScore>
       <Button link="/choose-level" title="Play again" />
-    </div>
+    </StyledGameOver>
   )
 }

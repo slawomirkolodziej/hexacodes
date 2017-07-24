@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import styled from 'styled-components';
 import Button from '../components/Button'
 import Title from '../components/Title'
 
@@ -30,15 +31,21 @@ const renderLevel = (props) => {
   )
 }
 
+const StyledMainMenu = styled.div`
+  @media (max-width: 600px) {
+    padding-bottom: 30px;
+  }
+`
+
 export default (props) => {
 
   return (
-    <div>
+    <StyledMainMenu>
       <Title>Hexacodes</Title>
       <Switch>
         <Route path="/choose-level" component={renderLevel} />
         <Route path="/" component={renderMenuElements} />
       </Switch>
-    </div>
+    </StyledMainMenu>
   )
 }
