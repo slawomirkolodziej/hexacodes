@@ -67,7 +67,6 @@ const resetTimer = () => {
 
 export const startGame = (level) => {
   return dispatch => {
-    //dispatch(resetTimer())
     dispatch(resetGameInfo(level))
   }
 }

@@ -27,7 +27,7 @@ export default (state = {}, {type, payload}) => {
     case ADD_POINT:
       return { ...state, score: state.score + 1, statusColor: '#1abc9c' }
     case SUBSTRACT_POINT:
-      return { ...state, score: state.score - 1, lives: state.lives - 1, statusColor: '#c0392b' }
+      return { ...state, lives: state.lives - 1, statusColor: '#c0392b' }
     default:
       return { ...state }
   }
