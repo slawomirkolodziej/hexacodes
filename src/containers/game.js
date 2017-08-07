@@ -37,7 +37,7 @@ class Game extends Component {
 
     if(!currentColor) return <div></div>
 
-    let colorNameValue = () => {
+    const colorNameValue = () => {
       const [r, g, b] = currentColor.getHex()
       return <ColorName><span>#</span>{r}{g}{b}</ColorName>
     }

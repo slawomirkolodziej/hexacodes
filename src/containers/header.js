@@ -9,13 +9,12 @@ const GameInfo = styled.div`
   display: flex;
 `
 
-
 const Header = (props) => {
   if(props.gameInfo.gameOver) return <div></div>
 
   return (
     <div>
-        <Timer isRunning={props.timer.isRunning} key={props.gameInfo.score} />
+        <Timer isRunning={props.timer.isRunning} key={props.timer.componentKey} />
         <GameInfo>
           <Score score={props.gameInfo.score} />
           <Lives lives={props.gameInfo.lives} />

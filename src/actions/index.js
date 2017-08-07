@@ -8,7 +8,7 @@ export const GENERATE_NEW_COLORS = 'generate_new_colors'
 export const START_TIMER = 'start_timer'
 export const STOP_TIMER = 'stop_timer'
 export const END_GAME = 'end_game'
-export const UPDATE_END_GAME_TIMEOUT = 'update_end_game_timeout'
+export const UPDATE_TIMEOUT = 'update_timeout'
 
 export const resetGameInfo = (level) => {
   const currentColor = new Color()
@@ -56,7 +56,7 @@ const resetTimer = () => {
 
       dispatch({ type: START_TIMER })
       dispatch({ 
-        type: UPDATE_END_GAME_TIMEOUT,
+        type: UPDATE_TIMEOUT,
         payload: {
           endGameTimeout: timeout
         }

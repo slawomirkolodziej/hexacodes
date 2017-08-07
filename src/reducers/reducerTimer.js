@@ -1,7 +1,7 @@
 import { 
   START_TIMER,
   STOP_TIMER,
-  UPDATE_END_GAME_TIMEOUT
+  UPDATE_TIMEOUT
 } from '../actions'
 
 export default (state = {}, {type, payload}) => {
@@ -10,8 +10,9 @@ export default (state = {}, {type, payload}) => {
       return { ...state, isRunning: true }
     case STOP_TIMER:
       return { ...state, isRunning: false }
-    case UPDATE_END_GAME_TIMEOUT:
-      return { ...state, endGameTimeout: payload.endGameTimeout }
+    case UPDATE_TIMEOUT:
+      /* force rerendering timer component by assigning random key */
+      return { ...state, endGameTimeout: payload.endGameTimeout, componentKey: Math.random() }
     default: 
       return state
   }
