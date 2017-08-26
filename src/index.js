@@ -22,7 +22,6 @@ injectGlobal`
 
 const store = createStore(reducers, applyMiddleware(thunk))
 
-
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter>

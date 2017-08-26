@@ -31,19 +31,17 @@ const GameWrapper = styled.div`
   }
 `
 
-const App = (props) => {
-  return (
-    <StyledApp statusColor={props.gameInfo.statusColor}>
-      <GameWrapper>
-        <Route path="/game/:level" component={Header} />
-        <Switch>
-          <Route path="/game/:level" component={Game} />
-          <Route path="/" component={MainMenu}/>
-        </Switch>
-      </GameWrapper>
-    </StyledApp>
-  )
-}
+const App = (props) => (
+  <StyledApp statusColor={props.gameInfo.statusColor}>
+    <GameWrapper>
+      <Route path="/game/:level" component={Header} />
+      <Switch>
+        <Route path="/game/:level" component={Game} />
+        <Route path="/" component={MainMenu}/>
+      </Switch>
+    </GameWrapper>
+  </StyledApp>
+)
 
 const mapStateToProps = (state, ownProps) => {
   return { gameInfo: state.gameInfo }

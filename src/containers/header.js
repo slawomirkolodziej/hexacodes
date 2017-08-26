@@ -10,20 +10,23 @@ const GameInfo = styled.div`
 `
 
 const Header = (props) => {
-  if(props.gameInfo.gameOver) return <div></div>
+  const { gameOver, score, lives } = props.gameInfo
+  const { isRunning, componentKey } = props.timer
+
+  if(gameOver) return <div></div>
 
   return (
     <div>
-        <Timer isRunning={props.timer.isRunning} key={props.timer.componentKey} />
+        <Timer isRunning={isRunning} key={componentKey} />
         <GameInfo>
-          <Score score={props.gameInfo.score} />
-          <Lives lives={props.gameInfo.lives} />
+          <Score score={score} />
+          <Lives lives={lives} />
         </GameInfo>
     </div>
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     gameInfo: state.gameInfo,
     timer: state.timer

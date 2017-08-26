@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledScore = styled.div`
+const Score = styled.div`
   height: 100%;
   width: 50%;
   padding: 10px;
@@ -12,11 +12,8 @@ const StyledScore = styled.div`
   text-align: center;
 `
 
-export default (props) => {
-
-  return (
-    <StyledScore>
-      Score: {props.score}
-    </StyledScore>
-  )
-}
+export default (props) =>  (
+  <Score>
+    Score: {props.score}
+  </Score>
+)

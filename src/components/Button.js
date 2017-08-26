@@ -22,10 +22,8 @@ const MenuItem = styled(Link)`
   }
 `
 
-export default ({ title, link }) => {
-  return (
-    <MenuItem to={link}>
-      {title}
-    </MenuItem>
-  )
-}
+export default ({ title, link }) => (
+  <MenuItem to={link}>
+    {title}
+  </MenuItem>
+)

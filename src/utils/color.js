@@ -1,4 +1,5 @@
-import { hslRanges, levelMultiplier } from '../constants/settings'
+import { hueRandomizeRange, saturationRandomizeRange, lightnessRandomizeRange } from '../constants/hslRandomizeRanges'
+import { easyLevelMultiplier, hardLevelMultiplier } from '../constants/levelsMultiplier'
 
 export default class Color {
 
@@ -34,15 +35,15 @@ export default class Color {
 
   getRandomColor() {
     return [
-      this.getRandomNumber(...hslRanges.h),
-      this.getRandomNumber(...hslRanges.s),
-      this.getRandomNumber(...hslRanges.l)
+      this.getRandomNumber(...hueRandomizeRange),
+      this.getRandomNumber(...saturationRandomizeRange),
+      this.getRandomNumber(...lightnessRandomizeRange)
     ]
   }
 
   getSimilarColors(difficulty) {
     const [h, s, l] = this.color
-    const multiplier = difficulty === 'hard' ? levelMultiplier.hard : levelMultiplier.easy 
+    const multiplier = difficulty === 'hard' ? hardLevelMultiplier : easyLevelMultiplier
     
     const shiftNumberWithinRange = (number, offset, min, max) => {
       let shiftedNumber = number + offset
@@ -84,20 +85,20 @@ export default class Color {
       return ranges
     }
 
-    const hueRanges = calculateRanges(h, ...hslRanges.h, multiplier)
-    const saturationRanges = calculateRanges(s, ...hslRanges.s, multiplier)
-    const lightnessRanges = calculateRanges(l, ...hslRanges.l, multiplier)
+    const hueRanges = calculateRanges(h, ...hueRandomizeRange, multiplier)
+    const saturationRanges = calculateRanges(s, ...saturationRandomizeRange, multiplier)
+    const lightnessRanges = calculateRanges(l, ...lightnessRandomizeRange, multiplier)
 
     return [
       new Color([
-        getRandomNumberWithinRange(...hslRanges.h, hueRanges[0]),
-        getRandomNumberWithinRange( ...hslRanges.s, saturationRanges[0]),
-        getRandomNumberWithinRange(...hslRanges.l, lightnessRanges[0])
+        getRandomNumberWithinRange(...hueRandomizeRange, hueRanges[0]),
+        getRandomNumberWithinRange( ...saturationRandomizeRange, saturationRanges[0]),
+        getRandomNumberWithinRange(...lightnessRandomizeRange, lightnessRanges[0])
       ]),
       new Color([
-        getRandomNumberWithinRange(...hslRanges.h, hueRanges[1]),
-        getRandomNumberWithinRange( ...hslRanges.s, saturationRanges[1]),
-        getRandomNumberWithinRange(...hslRanges.l, lightnessRanges[1])
+        getRandomNumberWithinRange(...hueRandomizeRange, hueRanges[1]),
+        getRandomNumberWithinRange( ...saturationRandomizeRange, saturationRanges[1]),
+        getRandomNumberWithinRange(...lightnessRandomizeRange, lightnessRanges[1])
       ])
     ]
   }

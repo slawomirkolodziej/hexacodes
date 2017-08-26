@@ -61,21 +61,15 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     gameInfo: state.gameInfo
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    startGame: (level) => {
-      dispatch(startGame(level))
-    },
-    checkAnswer: (currentColor, answer, level) => {
-      dispatch(checkAnswer(currentColor, answer, level))
-    }
-  }
+const mapDispatchToProps = {
+  startGame,
+  checkAnswer
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game)

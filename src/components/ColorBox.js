@@ -20,7 +20,7 @@ const ColorBox = styled.div`
   }
 `
 
-export default props => {
+export default (props) => {
   const onClick = (currentcolor, color, level) => {
     props.onClick(props.currentColor, props.color, props.level)
   }
@@ -31,5 +31,4 @@ export default props => {
       onClick={onClick}
     />
   )
-  
 }

@@ -31,5 +31,4 @@ export default (state = {}, {type, payload}) => {
     default:
       return { ...state }
   }
-  
 }
